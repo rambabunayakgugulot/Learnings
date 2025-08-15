@@ -353,38 +353,13 @@ If you can’t recover or add context, let the exception bubble up to the contro
 **5. What are the pros and cons of each pattern?**
 Q: What are the trade-offs between handling exceptions in the service layer, controller, or both?
 A:
+| Pattern                     | Pros                                                                                   | Cons                                                   |
+|-----------------------------|----------------------------------------------------------------------------------------|--------------------------------------------------------|
+| Service/Manager Layer Only  | Centralized logging, cleaner controllers, global error handling                        | Less granular control, risk of generic error responses |
+| Controller Layer Only       | Fine-grained HTTP mapping, separation of concerns, easier testing                      | Potentially repetitive code, possible missed logging   |
+| Both Layers                 | Detailed logging and precise error mapping, clear responsibilities                      | More boilerplate, risk of accidentally swallowing exceptions |
 
-| Layer                     | Validation (Verify) | Try-Catch/Logging        | Exception Handling                |
-|---------------            |---------------------|-------------------------|-----------------------------------|
-| Service/Manager Layer Only| ❌                  | ❌ (unless context)      | Let exceptions bubble up          |
-| Controller Layer Only     | ✅                  | ✅ (log/rethrow)         | Add context if needed         |
-| Controller                | ✅                  | ✅ (map to HTTP)         | User-friendly error output        |
-
-Pattern
-Pros
-Cons
-
-
-
-
-Service/Manager Layer Only
-Centralized logging, cleaner controllers, global error handling
-Less granular control, risk of generic error responses
-
-
-Controller Layer Only
-Fine-grained HTTP mapping, separation of concerns, easier testing
-Potentially repetitive code, possible missed logging
-
-
-Both Layers
-Detailed logging and precise error mapping, clear responsibilities
-More boilerplate, risk of accidentally swallowing exceptions
-
-
-
-
-6. Which pattern should I follow?
+**6. Which pattern should I follow?**
 Q: How do I decide which approach to use?
 A:
 
@@ -393,7 +368,7 @@ Use controller layer if you want fine-grained control over HTTP responses and mo
 Use both for maximum robustness in complex applications.
 
 
-7. What’s the summary of best practices?
+**7. What’s the summary of best practices?**
 A:
 
 Validate input in controllers.
@@ -403,7 +378,7 @@ Let mappers/helpers bubble exceptions up.
 Always log exceptions at the point of failure, especially for business logic errors.
 
 
-8. Is there a quick reference table?
+**8. Is there a quick reference table?**
 
 A:
 
@@ -414,7 +389,7 @@ A:
 | Controller    | ✅                  | ✅ (map to HTTP)         | User-friendly error output        |
 | Middleware    | ❌                  | ✅ (global catch)        | Generic error output              |
 
-9. What does “recover or add context” look like in practice?
+**9. What does “recover or add context” look like in practice?**
 
 A:
 
@@ -424,6 +399,6 @@ A:
 | Can add context           | Yes                  | Wrap/log and rethrow        |
 | Neither                   | No                   | Let exception bubble up     |
 
-10. What’s the key takeaway?
+**10. What’s the key takeaway?**
 A:
 Catch exceptions in the service/manager layer only if you can actually handle the error (recover) or make it more useful (add context). Otherwise, let the exception bubble up to the controller or global middleware for consistent and user-friendly error handling.
