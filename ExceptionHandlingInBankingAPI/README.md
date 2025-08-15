@@ -122,6 +122,7 @@ They make your code more readable, maintainable, and allow targeted error handli
 **Examples:**
 
 **InvalidAccountException:** Only makes sense in systems with accounts.
+
 **InsufficientFundsException:** Only makes sense in banking.
 
 **Code Example:**
