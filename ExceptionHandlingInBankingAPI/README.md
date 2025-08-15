@@ -31,11 +31,13 @@ Invalid accounts (nonexistent, locked, etc.)
 Unexpected errors (e.g., database issues)
 
 
-**2. What Are Exceptions?**
+## 2. What Are Exceptions?
+
 Exceptions are errors that disrupt normal program flow.
 Example: Trying to withdraw more money than available.
 
-**3. Basic Exception Handling: try-catch**
+## 3. Basic Exception Handling: try-catch
+
 **Before (no handling):**
 
 ```
@@ -71,7 +73,7 @@ public IActionResult Withdraw(decimal amount)
 Why?
 Without try-catch, any error would crash the API and confuse users.
 
-**4. Finally Block**
+## 4. Finally Block
 Use Case: Always log the transaction attempt, even if it fails.
 ```
 public IActionResult Withdraw(decimal amount)
@@ -96,7 +98,7 @@ public IActionResult Withdraw(decimal amount)
 Why?
 Without finally, you risk missing logs for failed transactions.
 
-**5. Throwing Exceptions**
+## 5. Throwing Exceptions
 **Use Case: Invalid withdrawal amount.**
 ```
 public IActionResult Withdraw(decimal amount)
@@ -110,7 +112,7 @@ public IActionResult Withdraw(decimal amount)
 Why?
 Throwing exceptions for invalid input prevents bad data from corrupting your system.
 
-**6. Custom Exceptions & Domain-Specific Errors**
+## 6. Custom Exceptions & Domain-Specific Errors
 **Why Custom Exceptions?**
 Custom exceptions represent errors unique to your business logic (“domain”).
 They make your code more readable, maintainable, and allow targeted error handling.
@@ -154,8 +156,9 @@ All errors look the same (generic), making debugging and user experience worse.
 You might accidentally handle system errors (like NullReferenceException) as business errors.
 
 
-**7. Throw vs Rethrow
-What’s the Difference?**
+## 7. Throw vs Rethrow
+
+**What’s the Difference?**
 
 
 throw ex;
@@ -191,7 +194,8 @@ What if not used?
 You’ll struggle to diagnose root causes in logs and error reports.
 
 
-**8. Real-Time System Design: With vs. Without Exception Handling**
+## 8. Real-Time System Design: With vs. Without Exception Handling 
+
 **With:**
 
 Users get clear, actionable error messages
@@ -206,7 +210,7 @@ Logs are incomplete or misleading
 Hard to maintain, risky for business
 
 
-**9. Best Practices for Experienced Developers**
+## 9. Best Practices for Experienced Developers
 
 Catch specific exceptions first
 Never swallow exceptions
@@ -215,7 +219,7 @@ Rethrow with throw; to preserve stack trace
 Centralize error handling with middleware
 
 
-**10. Running the Demo**
+## 10. Running the Demo 
 
 Clone repo, open in Visual Studio/VS Code
 Build and run (dotnet run)
@@ -223,7 +227,7 @@ Test /api/account/withdraw with various amounts and account IDs
 Observe logs and error messages
 
 
-**11. Code Review Highlights**
+## 11. Code Review Highlights 
 
 Added try-catch blocks for user-friendly errors
 Used finally for guaranteed logging
@@ -233,8 +237,9 @@ Created InsufficientFundsException and InvalidAccountException for domain logic
 Added middleware for centralized error handling
 Explained throw vs rethrow with code and comments
 
-**🚦12. Validation vs. Exception Handling in API Controllers
-Validation**
+## 🚦12. Validation vs. Exception Handling in API Controllers
+
+**Validation**
 
 Checks user input against business rules before processing.
 Returns clear, actionable error messages to the client (e.g., BadRequest("Amount must be positive.")).
@@ -290,7 +295,7 @@ Use exception handling for rare, unpredictable system failures.
 
 
 -----------------------------------------------------------------------------------------
-**13. Exception Handling & Validation Pattern – Q&A**
+## 13. Exception Handling & Validation Pattern – Q&A 
 -----------------------------------------------------------------------------------------
 
 **1. Where should input validation happen?**
