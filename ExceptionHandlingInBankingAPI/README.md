@@ -1,24 +1,27 @@
 ﻿BankingApi – Exception Handling in C# with Real-Time Use Case 
  
-🚀This project demonstrates exception handling in C# using a banking withdrawal API.
+🚀 This project demonstrates exception handling in C# using a banking withdrawal API.
 Each concept is introduced step by step, with code samples, inline comments, and reviewer notes explaining why, what, how, and what happens if omitted.
 
 📚 **Table of Contents**
 
-Use Case Overview
-What Are Exceptions?
-Basic Exception Handling: try-catch
-Finally Block
-Throwing Exceptions
-Custom Exceptions & Domain-Specific Errors
-Throw vs Rethrow
-Real-Time System Design: With vs. Without Exception Handling
-Best Practices for Experienced Developers
-Running the Demo
-Code Review Highlights
+1. [Use Case Overview](#1-use-case-overview)
+2. [What Are Exceptions?](#2-what-are-exceptions)
+3. [Basic Exception Handling: try-catch](#3-basic-exception-handling-try-catch)
+4. [Finally Block](#4-finally-block)
+5. [Throwing Exceptions](#5-throwing-exceptions)
+6. [Custom Exceptions & Domain-Specific Errors](#6-custom-exceptions--domain-specific-errors)
+7. [Throw vs Rethrow](#7-throw-vs-rethrow)
+8. [Real-Time System Design: With vs Without Exception Handling](#8-real-time-system-design-with-vs-without-exception-handling)
+9. [Best Practices for Experienced Developers](#9-best-practices-for-experienced-developers)
+10. [Running the Demo](#10-running-the-demo)
+11. [Code Review Highlights](#11-code-review-highlights)
+12. [Validation vs Exception Handling in API Controllers](#12-validation-vs-exception-handling-in-api-controllers)
+13. [Exception Handling & Validation Pattern – Q&A](#13-exception-handling--validation-pattern--qa)
 
 
-**1. Use Case Overview**
+## 1. Use Case Overview
+
 A customer wants to withdraw money from their bank account.
 We need to handle:
 
@@ -287,7 +290,7 @@ Use exception handling for rare, unpredictable system failures.
 
 
 -----------------------------------------------------------------------------------------
-**Exception Handling & Validation Pattern – Q&A**
+**13. Exception Handling & Validation Pattern – Q&A**
 -----------------------------------------------------------------------------------------
 
 **1. Where should input validation happen?**
