@@ -33,19 +33,21 @@ Exceptions are errors that disrupt normal program flow.
 Example: Trying to withdraw more money than available.
 
 **3. Basic Exception Handling: try-catch**
-Before (no handling):
+**Before (no handling):**
 
+```
 public IActionResult Withdraw(decimal amount)
 {
     decimal balance = 100;
     decimal newBalance = balance - amount; // May go negative!
     return Ok(newBalance);
 }
-
+```
 **Reviewer Note:**
 No error handling—negative balances possible, bad UX!
-After (with try-catch):
 
+**After (with try-catch):**
+```
 public IActionResult Withdraw(decimal amount)
 {
     try
@@ -62,13 +64,13 @@ public IActionResult Withdraw(decimal amount)
         return BadRequest(ex.Message);
     }
 }
-
+```
 Why?
 Without try-catch, any error would crash the API and confuse users.
 
 **4. Finally Block**
 Use Case: Always log the transaction attempt, even if it fails.
-
+```
 public IActionResult Withdraw(decimal amount)
 {
     string log = "";
@@ -87,13 +89,13 @@ public IActionResult Withdraw(decimal amount)
         Console.WriteLine("Transaction attempted at " + DateTime.Now);
     }
 }
-
+```
 Why?
 Without finally, you risk missing logs for failed transactions.
 
 **5. Throwing Exceptions**
 **Use Case: Invalid withdrawal amount.**
-
+```
 public IActionResult Withdraw(decimal amount)
 {
     if (amount <= 0)
@@ -101,7 +103,7 @@ public IActionResult Withdraw(decimal amount)
         throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be positive");
     // ...rest of logic
 }
-
+```
 Why?
 Throwing exceptions for invalid input prevents bad data from corrupting your system.
 
@@ -116,24 +118,27 @@ InsufficientFundsException: Only makes sense in banking.
 InvalidAccountException: Only makes sense in systems with accounts.
 
 **Code Example:**
-
+```
 public class InsufficientFundsException : Exception
 {
     public InsufficientFundsException(string message) : base(message) { }
 }
-
+```
+```
 public class InvalidAccountException : Exception
 {
     public InvalidAccountException(string message) : base(message) { }
 }
-
+```
 Usage in Controller:
 
+```
 if (!AccountExists(request.AccountId))
     throw new InvalidAccountException("Account does not exist.");
 
 if (request.Amount > balance)
     throw new InsufficientFundsException("Not enough funds for withdrawal.");
+```
 
 **Reviewer Note:**
 
@@ -159,7 +164,7 @@ Rethrows the current exception, preserves the original stack trace (best practic
 
 
 **Example:**
-
+```
 try
 {
     // ...withdraw logic
@@ -173,8 +178,9 @@ catch (Exception ex)
 
     // throw ex; // BAD: Loses stack trace, harder to debug
 }
+```
 
-Why?
+**Why?**
 Preserving the stack trace helps you find the real source of the error.
 If you use throw ex;, you lose this information, making production debugging much harder.
 What if not used?
@@ -183,14 +189,14 @@ You’ll struggle to diagnose root causes in logs and error reports.
 
 
 **8. Real-Time System Design: With vs. Without Exception Handling**
-With:
+**With:**
 
 Users get clear, actionable error messages
 System logs all attempts
 No negative balances or invalid operations
 Developers can debug issues quickly
 
-Without:
+**Without:**
 
 Crashes, negative balances, poor UX
 Logs are incomplete or misleading
@@ -240,12 +246,14 @@ Returns generic or internal error messages (e.g., StatusCode(500, "An unexpected
 
 **Examples**
 
-Validation:
+**Validation:**
+```
 if (amount <= 0)
     return BadRequest("Amount must be positive.");
+```
 
-
-Exception Handling:
+**Exception Handling:**
+```
 try
 {
     // DB access or other risky operations
@@ -255,7 +263,7 @@ catch (Exception ex)
     // Log and return generic error
     return StatusCode(500, "An unexpected error occurred.");
 }
-
+```
 
 
 **Why This Matters**
@@ -310,7 +318,7 @@ A:
 **4. Can you show examples of each scenario?**
 A:
 **A. Recovering from an Exception**
-
+```
 public AccountBalance GetAccountBalance(string accountId)
 {
     try
@@ -323,11 +331,11 @@ public AccountBalance GetAccountBalance(string accountId)
         return _cache.GetBalance(accountId);
     }
 }
-
+```
 Here, the service “recovers” by providing a fallback, so the controller never sees the error.
 
 **B. Adding Context to an Exception**
-
+```
 public void Withdraw(string accountId, decimal amount)
 {
     try
@@ -339,16 +347,16 @@ public void Withdraw(string accountId, decimal amount)
         throw new DataAccessException($"Failed to withdraw from account {accountId}.", ex);
     }
 }
-
+```
 Here, the service “adds context” by wrapping the original exception with more details for easier troubleshooting.
 
 **C. Letting Exceptions Bubble Up**
-
+```
 public void Withdraw(string accountId, decimal amount)
 {
     _repository.Withdraw(accountId, amount);
 }
-
+```
 If you can’t recover or add context, let the exception bubble up to the controller or middleware.
 
 **5. What are the pros and cons of each pattern?**
