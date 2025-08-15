@@ -291,32 +291,44 @@ Use exception handling for rare, unpredictable system failures.
 -----------------------------------------------------------------------------------------
 
 **1. Where should input validation happen?**
+
 Q: Where do I validate user input in a typical layered .NET application?
+
 A:
 
 **Controllers**: Validate user input at the boundary using utilities like Verify or data annotations.
+
 **Services**: Validate business rules and contract requirements. Throw exceptions if these are violated.
 
 
 **2. Where should exceptions be caught and handled?**
+
 Q: Should I use try-catch in the service/manager layer, the controller, or both?
+
 A:
 
 **Services**: Use try-catch only if you can recover from the error (e.g., retry, fallback) or add useful context (e.g., wrap with business info or log and rethrow).
+
 **Controllers**: Catch known exceptions and map them to user-friendly HTTP responses (e.g., BadRequest, Conflict). Let unexpected exceptions bubble up to global middleware.
+
 **Mappers/Helpers**: Let exceptions bubble up unless you need to add context.
 
 
 **3. What does “recover or add context” mean in exception handling?**
+
 Q: What does it mean for the service layer to only catch exceptions if it can recover or add context?
+
 A:
 
 **Recover**: The service can handle the exception so the operation can succeed or degrade gracefully (e.g., use cached data if a remote call fails).
+
 **Add Context:** The service catches an exception to provide more diagnostic information (e.g., wrap a low-level exception with business-specific details).
 
 
 **4. Can you show examples of each scenario?**
+
 A:
+
 **A. Recovering from an Exception**
 ```
 public AccountBalance GetAccountBalance(string accountId)
@@ -351,6 +363,7 @@ public void Withdraw(string accountId, decimal amount)
 Here, the service “adds context” by wrapping the original exception with more details for easier troubleshooting.
 
 **C. Letting Exceptions Bubble Up**
+
 ```
 public void Withdraw(string accountId, decimal amount)
 {
@@ -360,8 +373,11 @@ public void Withdraw(string accountId, decimal amount)
 If you can’t recover or add context, let the exception bubble up to the controller or middleware.
 
 **5. What are the pros and cons of each pattern?**
+
 Q: What are the trade-offs between handling exceptions in the service layer, controller, or both?
+
 A:
+
 | Pattern                     | Pros                                                                                   | Cons                                                   |
 |-----------------------------|----------------------------------------------------------------------------------------|--------------------------------------------------------|
 | Service/Manager Layer Only  | Centralized logging, cleaner controllers, global error handling                        | Less granular control, risk of generic error responses |
@@ -369,7 +385,9 @@ A:
 | Both Layers                 | Detailed logging and precise error mapping, clear responsibilities                      | More boilerplate, risk of accidentally swallowing exceptions |
 
 **6. Which pattern should I follow?**
+
 Q: How do I decide which approach to use?
+
 A:
 
 Use service/manager layer only if you have robust global exception middleware and want minimal controllers.
@@ -378,6 +396,7 @@ Use both for maximum robustness in complex applications.
 
 
 **7. What’s the summary of best practices?**
+
 A:
 
 Validate input in controllers.
@@ -409,5 +428,7 @@ A:
 | Neither                   | No                   | Let exception bubble up     |
 
 **10. What’s the key takeaway?**
+
 A:
+
 Catch exceptions in the service/manager layer only if you can actually handle the error (recover) or make it more useful (add context). Otherwise, let the exception bubble up to the controller or global middleware for consistent and user-friendly error handling.
