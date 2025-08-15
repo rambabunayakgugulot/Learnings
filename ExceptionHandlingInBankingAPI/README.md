@@ -402,24 +402,22 @@ Always log exceptions at the point of failure, especially for business logic err
 
 A:
 
-Markdown| Layer         | Validation (Verify) | Try-Catch/Logging        | Exception Handling                |
+| Layer         | Validation (Verify) | Try-Catch/Logging        | Exception Handling                |
 |---------------|---------------------|-------------------------|-----------------------------------|
 | Mapper        | ❌                  | ❌ (unless context)      | Let exceptions bubble up          |
 | Service       | ✅                  | ✅ (log/rethrow)         | Add context if needed             |
 | Controller    | ✅                  | ✅ (map to HTTP)         | User-friendly error output        |
 | Middleware    | ❌                  | ✅ (global catch)        | Generic error output              |
 
-
 9. What does “recover or add context” look like in practice?
 
 A:
 
-Markdown| Scenario                  | Should Service Catch? | What to Do                  |
+| Scenario                  | Should Service Catch? | What to Do                  |
 |---------------------------|----------------------|-----------------------------|
 | Can recover (fallback)    | Yes                  | Handle and return/fallback  |
 | Can add context           | Yes                  | Wrap/log and rethrow        |
 | Neither                   | No                   | Let exception bubble up     |
-
 
 10. What’s the key takeaway?
 A:
