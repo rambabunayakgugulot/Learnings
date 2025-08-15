@@ -116,11 +116,13 @@ Throwing exceptions for invalid input prevents bad data from corrupting your sys
 **Why Custom Exceptions?**
 Custom exceptions represent errors unique to your business logic (“domain”).
 They make your code more readable, maintainable, and allow targeted error handling.
-Domain-specific errors are problems that only make sense in your application’s context (not generic programming errors).
-Examples:
 
-InsufficientFundsException: Only makes sense in banking.
-InvalidAccountException: Only makes sense in systems with accounts.
+**Domain-specific errors** are problems that only make sense in your application’s context (not generic programming errors).
+**Examples:**
+
+**InsufficientFundsException: ** Only makes sense in banking.
+
+**InvalidAccountException:** Only makes sense in systems with accounts.
 
 **Code Example:**
 ```
