@@ -1,4 +1,4 @@
-﻿BankingApi – Exception Handling in C# with Real-Time Use Case 
+**﻿BankingApi – Exception Handling in C# with Real-Time Use Case **
  
 🚀 This project demonstrates exception handling in C# using a banking withdrawal API.
 Each concept is introduced step by step, with code samples, inline comments, and reviewer notes explaining why, what, how, and what happens if omitted.
