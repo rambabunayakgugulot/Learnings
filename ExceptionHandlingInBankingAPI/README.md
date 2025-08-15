@@ -399,7 +399,9 @@ Always log exceptions at the point of failure, especially for business logic err
 
 
 8. Is there a quick reference table?
+
 A:
+
 Markdown| Layer         | Validation (Verify) | Try-Catch/Logging        | Exception Handling                |
 |---------------|---------------------|-------------------------|-----------------------------------|
 | Mapper        | ❌                  | ❌ (unless context)      | Let exceptions bubble up          |
@@ -409,7 +411,9 @@ Markdown| Layer         | Validation (Verify) | Try-Catch/Logging        | Excep
 
 
 9. What does “recover or add context” look like in practice?
+
 A:
+
 Markdown| Scenario                  | Should Service Catch? | What to Do                  |
 |---------------------------|----------------------|-----------------------------|
 | Can recover (fallback)    | Yes                  | Handle and return/fallback  |
